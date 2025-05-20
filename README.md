@@ -8,7 +8,7 @@
 
 ---
 
-# 💧 Sistema de Irrigação Inteligente com ESP32
+# 💧 Entrega 2: Armazenamento de Dados em Banco SQL com Python
 
 ## 💻 Grupo: FarmTech Solutions
 
@@ -30,14 +30,7 @@
 
 ## 📜 Descrição
 
-O projeto consiste em um **sistema de irrigação inteligente** utilizando o microcontrolador **ESP32**, com sensores físicos simulados na plataforma **Wokwi**. A proposta é monitorar condições ambientais como:
-
-- Temperatura e umidade do ar (DHT22)
-- Luminosidade (LDR)
-- Umidade do solo (simulada)
-- Acionamento de bomba via botão físico
-
-A automação da bomba ocorre de forma manual (botão verde) ou via simulação de necessidade hídrica (sensores). Os dados capturados podem ser armazenados via script em **Python**, simulando a integração com um banco de dados relacional.
+Projeto que simula sensores agrícolas no Wokwi (ESP32) e armazena dados em banco Oracle. Os sensores simulam fósforo, potássio, pH e umidade do solo.
 
 ---
 
