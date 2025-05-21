@@ -235,127 +235,42 @@ inst_alteracao.close()
 inst_exclusao.close()
 conn.close()
 
+---
+# Justificativa da Estrutura de Dados e relacionamento MER
+
+A estrutura de dados foi projetada para representar com fidelidade as leituras de sensores agrícolas em tempo real, simulando um cenário de automação no campo, com controle de irrigação baseado em variáveis ambientais.
+---
+Entidade Principal: SensorSimulacao
+No Modelo Entidade-Relacionamento (MER), definimos a entidade central SensorSimulacao, que representa cada registro de leitura dos sensores no sistema. Esta entidade foi escolhida por ser atômica (uma linha = uma leitura completa) e independente (não depende de outras entidades para existir).
 
 ---
 
-## 🧠 Teoria de Operação
+## Atributos e Justificativas
 
-### Botões:
-
-- **Verde (Manual)**: Liga a bomba de irrigação
-- **Azul (Simulado)**: Controla acionamento automatizado
-- Possuem **resistores pull-down** ou **pull-up** conforme a lógica
-- Atributo `bounce="1"` no Wokwi evita ruído (debounce mecânico)
-
-### Sensores:
-
-- **DHT22**: Umidade relativa do ar e temperatura
-- **LDR**: Mede intensidade luminosa (lux)
-- Os valores dos sensores são lidos e avaliados para decidir irrigação
-
----
-# 🧠 Justificativa da Estrutura de Dados para o Sistema de Irrigação Inteligente
-
-A estrutura de banco de dados relacional (SQL) foi escolhida para este projeto considerando as seguintes características e requisitos do sistema:
+| Atributo         | Tipo         | Justificativa                                                               |
+| ---------------- | ------------ | --------------------------------------------------------------------------- |
+| `id`             | NUMBER       | Identificador único, gerado automaticamente. Facilita buscas e alterações.  |
+| `data_hora`      | TIMESTAMP    | Captura o momento exato da leitura. Essencial para auditoria e análises.    |
+| `temperatura`    | FLOAT        | Simula o sensor de temperatura, influencia diretamente a irrigação.         |
+| `umidade`        | FLOAT        | Principal critério de ativação da bomba de irrigação.                       |
+| `ph`             | FLOAT        | Simulado via sensor LDR; importante para qualidade do solo.                 |
+| `status_bomba`   | NUMBER(1)    | Representa se a bomba estava ligada (1) ou desligada (0) durante a leitura. |
+| `tempo_ativacao` | NUMBER       | Tempo de funcionamento da bomba (minutos). Pode ser nulo se desligada.      |
+| `fase`           | VARCHAR2(30) | Representa o estágio do processo agrícola (Inicial, Crítica, etc.).         |
 
 ---
 
-## 1. Natureza dos Dados e Relacionamentos
+## Relacionamento com o MER
 
-- **Dados Estruturados**: Leituras de sensores (temperatura, umidade, pH) têm estrutura fixa e bem definida.
-- **Relacionamentos Claros**: Existem relações previsíveis entre entidades (ex: leituras ↔ configurações).
-- **Consistência**: A garantia ACID (Atomicidade, Consistência, Isolamento, Durabilidade) é importante para registros de irrigação.
+A estrutura segue o padrão de um MER relacional simples, com:
 
----
+Chave primária (id) garantindo unicidade.
 
-## 2. Vantagens do SQLite para este Caso
+Dados normalizados (uma entidade, sem repetição de informações).
 
-- **Leveza e Portabilidade**: Ideal para sistemas embarcados ou de pequeno porte.
-- **Zero Configuração**: Não requer servidor dedicado.
-- **Compatibilidade**: Funciona bem com Python e potencialmente com microcontroladores.
-- **Performance Adequada**: Para o volume de dados gerado por sensores (leituras a cada 2 segundos).
+Campos bem tipados para refletir os sensores e contexto de leitura.
 
----
-
-## 3. Modelagem das Tabelas
-
-### 🔹 Tabela `leituras`
-
-```sql
-CREATE TABLE leituras (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data_hora DATETIME NOT NULL,
-    temperatura REAL,
-    umidade REAL,
-    ph REAL,
-    bomba_ligada BOOLEAN
-);
-```
-
-**Justificativas**:
-- Chave primária auto-incrementada garante identificação única.
-- Tipos `REAL` otimizam o armazenamento numérico.
-- Campo `bomba_ligada` registra o estado no momento da leitura.
-
----
-
-### 🔹 Tabela `ativacoes_manuais`
-
-```sql
-CREATE TABLE ativacoes_manuais (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    data_hora DATETIME NOT NULL,
-    botao_pressionado TEXT,
-    motivo TEXT
-);
-```
-
-**Justificativas**:
-- Registra intervenções humanas (ex: botão de emergência).
-- Campo `motivo` permite análises futuras das causas.
-
----
-
-### 🔹 Tabela `configuracoes`
-
-```sql
-CREATE TABLE configuracoes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    umidade_minima REAL DEFAULT 14.0,
-    temperatura_maxima REAL DEFAULT 23.0,
-    tempo_maximo_bomba INTEGER DEFAULT 5
-);
-```
-
-**Justificativas**:
-- Funciona como singleton (um único registro de parâmetros atuais).
-- Permite modificar limites sem reprogramar o código.
-- Valores padrão seguem especificações definidas na Fase 1.
-
----
-
-## 4. Alternativas Consideradas e Rejeitadas
-
-| Alternativa             | Motivo da Rejeição                                       |
-|-------------------------|-----------------------------------------------------------|
-| NoSQL (MongoDB)         | Dados são estruturados e relacionais                     |
-| Arquivos CSV/JSON       | Pouca integridade, difícil escalar                       |
-| Armazenamento na EEPROM | Limitado, difícil para consultas e operações complexas   |
-
----
-
-## 5. Padrões de Acesso Otimizados
-
-- **Índices Automáticos**: SQLite cria índices para chaves primárias.
-- **Consultas Frequentes**:
-```sql
-SELECT * FROM leituras ORDER BY data_hora DESC LIMIT 10;
-```
----
-
-## ✅ Conclusão
-
-Esta estrutura relacional oferece um ótimo equilíbrio entre simplicidade, integridade, performance e flexibilidade. Ela atende aos requisitos atuais e está preparada para futuras expansões do sistema de irrigação inteligente.
+Sem necessidade de tabelas auxiliares, pois não há relacionamentos 1:N ou N:N no escopo da simulação.
 
 ---
 
