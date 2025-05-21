@@ -116,6 +116,9 @@ A automação da bomba ocorre de forma manual (botão verde) ou via simulação 
 
 - 0.1.0 - 20/05/2025
 ---
+## 🖼 Imagem do circuito no Wokwi
+![image](https://github.com/user-attachments/assets/654b7998-e2d3-40f9-b7c7-7f8aa7ab129f)
+
 
 ## 📋 Licença
 
