@@ -10,7 +10,7 @@
 
 # 💧 Entrega 2: Armazenamento de Dados em Banco SQL com Python
 
-## 💻 Grupo: FarmTech Solutions
+## 💻 Grupo: Grupo: Graduação - 1TIAOB - 2025/1 - Grupo 23
 
 ## 👨‍🎓 Integrantes: 
 - Daniel Caffé RM564440
@@ -30,7 +30,21 @@
 
 ## 📜 Descrição
 
-Projeto que simula sensores agrícolas no Wokwi (ESP32) e armazena dados em banco Oracle. Os sensores simulam fósforo, potássio, pH e umidade do solo.
+Projeto que simula sensores agrícolas no Wokwi (ESP32) e armazena dados em banco Oracle.
+
+Sensores Simulados
+
+Temperatura (temp): em graus Celsius
+
+Umidade (umi): porcentagem
+
+pH (ph): valor float entre 0 e 14
+
+Status da Bomba (bomba): 1 = ligada, 0 = desligada
+
+Tempo de ativação (tempo): em minutos (pode ser nulo)
+
+Fase da operação: texto descritivo ("Inicial", "Crítica", etc)
 
 ---
 
