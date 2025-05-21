@@ -108,6 +108,7 @@ Apaga todos os registros da tabela com confirmação do usuário.
 - pip install oracledb
 - Biblioteca pandas:
 - pip install pandas
+- Banco Oracle ativo
 
 ### 💻 Execução Local com PlatformIO
 
