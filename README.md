@@ -38,13 +38,11 @@ Projeto que simula sensores agrícolas no Wokwi (ESP32) e armazena dados em banc
 
 ![image](https://github.com/user-attachments/assets/f4970eea-af9e-4ccd-ab51-d23eff0e9f4a)
 
+![image](https://github.com/user-attachments/assets/214c1646-bfa3-4b9d-a40c-9f74f04cb748)
 
-Tabela 1: Ativações Automáticas da Bomba
-Condição Ativadora	        Temperatura	Umidade	  pH Médio	Vezes Ativada	Tempo Médio Ativação
-Umidade < 14%	              24.00°C	    10.00%	  14.7	        3	            ~3 minutos
-Umidade < 14% + Temp >23	  32.00°C	    10.00%	  14.2	        7	            ~5 minutos
-Umidade Crítica (7%)	      26.70°C	    7.00%	    13.8	        2	            ~2 minutos
+![image](https://github.com/user-attachments/assets/1a72720f-94ad-4312-903f-6100b1a3d1d5)
 
+![image](https://github.com/user-attachments/assets/61a80c01-3f7c-442a-9c7e-0feb569b6652)
 
 ## 📁 Estrutura de Pastas
 
