@@ -29,6 +29,9 @@ Cap 1 - Construindo uma máquina agrícola
 
 ---
 
+> ℹ️ **Nota:** Este repositório está em desenvolvimento e esta entrega corresponde apenas ao Capítulo 1 do projeto. O código fonte está localizado na pasta `src/` e pode ser testado diretamente na plataforma [Wokwi](https://wokwi.com/).
+---
+
 ## 📜 Descrição
 
 O projeto consiste em um **sistema de irrigação inteligente** utilizando o microcontrolador **ESP32**, com sensores físicos simulados na plataforma **Wokwi**. A proposta é monitorar condições ambientais como:
