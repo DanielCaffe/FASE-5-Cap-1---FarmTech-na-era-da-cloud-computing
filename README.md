@@ -9,8 +9,9 @@
 ---
 
 # 💧 Sistema de Irrigação Inteligente com ESP32
+Cap 1 - Construindo uma máquina agrícola
 
-## 💻 Grupo: FarmTech Solutions
+## 💻 Grupo: Graduação - 1TIAOB - 2025/1 - Grupo 20
 
 ## 👨‍🎓 Integrantes: 
 - Daniel Caffé RM564440
