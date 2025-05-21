@@ -101,19 +101,13 @@ Apaga todos os registros da tabela com confirmação do usuário.
 
 ## 🔧 Como Executar o Código
 
-### 🛠 Pré-requisitos:
+### 🛠 Requisitos:
 
-- VS Code + Extensão [PlatformIO](https://platformio.org/install)
-- Conta no [Wokwi](https://wokwi.com/)
 - Python 3.11+
-- Git instalado
-
-### 🧪 Simulação no Wokwi
-
-1. Abra o projeto no site [wokwi.com](https://wokwi.com/)
-2. Faça upload do `diagram.json` e `wokwi.toml`
-3. Insira o código `main.cpp` na IDE do Wokwi
-4. Execute a simulação com o botão "Start Simulation"
+- Biblioteca oracledb:
+- pip install oracledb
+- Biblioteca pandas:
+- pip install pandas
 
 ### 💻 Execução Local com PlatformIO
 
