@@ -48,6 +48,34 @@ Fase da operação: texto descritivo ("Inicial", "Crítica", etc)
 
 ---
 
+💾 Simulação do Armazenamento com Python + SQLite
+O script responsável pela simulação do armazenamento dos dados do ESP32 está localizado na pasta:
+
+    ```bash
+    /src/sensorSimulacao.py
+
+Funcionalidades implementadas:
+Inserção de leituras (temperatura, umidade, pH, etc.)
+
+Consulta de todas as leituras
+
+Atualização da umidade de uma leitura específica
+
+Exclusão de leituras por ID
+
+Exclusão de todas as leituras com confirmação
+
+Requisitos:
+Python 3.8+
+
+Bibliotecas:
+
+pandas (para exibição das tabelas)
+
+sqlite3 (já incluída por padrão no Python)
+
+
+
 ## 📜 Dados do monitor serial do ESP32
 
 ![image](https://github.com/user-attachments/assets/f4970eea-af9e-4ccd-ab51-d23eff0e9f4a)
