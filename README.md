@@ -110,24 +110,146 @@ Apaga todos os registros da tabela com confirmação do usuário.
 - pip install pandas
 - Banco Oracle ativo
 
-### 💻 Execução Local com PlatformIO
+### 💻 Execução Script Python:
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/usuario/repositorio.git
-   ```
-2. Navegue até a pasta:
-   ```bash
-   cd repositorio
-   ```
-3. Instale as dependências e compile:
-   ```bash
-   pio run
-   ```
-4. Para fazer upload (se estiver com ESP32 real):
-   ```bash
-   pio run --target upload
-   ```
+# Importação dos módulos
+import os
+import oracledb
+import pandas as pd
+from datetime import datetime
+
+# Tentativa de conexão com o banco de dados
+try:
+    conn = oracledb.connect(user='USUARIO', password='SENHA', dsn='oracle.fiap.com.br:1521/ORCL')
+    inst_cadastro = conn.cursor()
+    inst_consulta = conn.cursor()
+    inst_alteracao = conn.cursor()
+    inst_exclusao = conn.cursor()
+except Exception as e:
+    print("Erro na conexão com o banco:", e)
+    conexao = False
+else:
+    conexao = True
+
+margem = ' ' * 4
+
+# Loop principal da aplicação
+while conexao:
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("---- SIMULADOR DE SENSORES AGRÍCOLAS ----")
+    print("""
+    1 - Cadastrar Leitura
+    2 - Listar Leituras
+    3 - Alterar Leitura
+    4 - Excluir Leitura
+    5 - EXCLUIR TODAS AS LEITURAS
+    6 - SAIR
+    """)
+
+    escolha = input(margem + "Escolha -> ")
+
+    if not escolha.isdigit():
+        print("\nOpção inválida!")
+        input("Pressione ENTER")
+        continue
+
+    match int(escolha):
+        case 1:
+            try:
+                print("----- CADASTRAR LEITURA -----\n")
+                temp = float(input(margem + "Temperatura (°C): "))
+                umi = float(input(margem + "Umidade (%): "))
+                ph = float(input(margem + "pH: "))
+                bomba = int(input(margem + "Bomba Ligada? (1=Sim / 0=Não): "))
+                tempo = input(margem + "Tempo de Ativação (min): ")
+                tempo = float(tempo) if tempo else None
+                fase = input(margem + "Fase da operação: ")
+
+                sql = f"""
+                INSERT INTO SensorSimulacao (data_hora, temperatura, umidade, ph, status_bomba, tempo_ativacao, fase)
+                VALUES (TO_TIMESTAMP('{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'),
+                        {temp}, {umi}, {ph}, {bomba}, {tempo if tempo is not None else 'NULL'}, '{fase}')
+                """
+                inst_cadastro.execute(sql)
+                conn.commit()
+            except ValueError:
+                print("\nDigite valores numéricos válidos!")
+            except Exception as e:
+                print("Erro ao cadastrar:", e)
+            else:
+                print("\nLeitura cadastrada com sucesso!")
+            input("Pressione ENTER")
+
+        case 2:
+            print("----- LISTAR LEITURAS -----\n")
+            inst_consulta.execute("SELECT * FROM SensorSimulacao")
+            data = inst_consulta.fetchall()
+            if data:
+                df = pd.DataFrame.from_records(data, columns=[
+                    'ID', 'Data/Hora', 'Temperatura', 'Umidade', 'pH', 'Status Bomba', 'Tempo Ativação', 'Fase'
+                ], index='ID')
+                print(df)
+            else:
+                print("\nNenhuma leitura registrada.")
+            input("\nPressione ENTER")
+
+        case 3:
+            try:
+                print("----- ALTERAR LEITURA -----\n")
+                leitura_id = int(input(margem + "Digite o ID da leitura a alterar: "))
+                sql_check = f"SELECT * FROM SensorSimulacao WHERE id = {leitura_id}"
+                inst_consulta.execute(sql_check)
+                if not inst_consulta.fetchall():
+                    print("\nLeitura não encontrada!")
+                else:
+                    nova_umidade = float(input(margem + "Nova Umidade (%): "))
+                    sql_update = f"UPDATE SensorSimulacao SET umidade = {nova_umidade} WHERE id = {leitura_id}"
+                    inst_alteracao.execute(sql_update)
+                    conn.commit()
+                    print("\nLeitura atualizada com sucesso!")
+            except Exception as e:
+                print("Erro ao alterar leitura:", e)
+            input("\nPressione ENTER")
+
+        case 4:
+            print("----- EXCLUIR LEITURA -----\n")
+            leitura_id = input(margem + "Digite o ID da leitura a excluir: ")
+            if leitura_id.isdigit():
+                leitura_id = int(leitura_id)
+                sql_del = f"DELETE FROM SensorSimulacao WHERE id = {leitura_id}"
+                inst_exclusao.execute(sql_del)
+                conn.commit()
+                print("\nLeitura excluída!")
+            else:
+                print("ID inválido!")
+            input("\nPressione ENTER")
+
+        case 5:
+            print("\n!!!!! EXCLUIR TODAS AS LEITURAS !!!!!\n")
+            confirma = input(margem + "CONFIRMA A EXCLUSÃO DE TODAS AS LEITURAS? [S/N]: ")
+            if confirma.upper() == 'S':
+                inst_exclusao.execute("DELETE FROM SensorSimulacao")
+                conn.commit()
+                print("\nTodas as leituras foram removidas!")
+            else:
+                print("\nOperação cancelada.")
+            input("\nPressione ENTER")
+
+        case 6:
+            print("Saindo da aplicação...")
+            break
+
+        case _:
+            print("\nOpção inválida!")
+            input("Pressione ENTER")
+
+# Fechamento dos cursores e conexão
+inst_cadastro.close()
+inst_consulta.close()
+inst_alteracao.close()
+inst_exclusao.close()
+conn.close()
+
 
 ---
 
