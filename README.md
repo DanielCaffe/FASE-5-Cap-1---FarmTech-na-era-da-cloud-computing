@@ -58,21 +58,6 @@ Fase da operação: texto descritivo ("Inicial", "Crítica", etc)
 
 ![image](https://github.com/user-attachments/assets/61a80c01-3f7c-442a-9c7e-0feb569b6652)
 
-## 📁 Estrutura de Pastas
-
-```
-📦 nome arquivo/
-├── assets/
-├── config/
-├── document/
-│   └── other/
-├── scripts/
-├── src/
-├── .github/
-├── README.md
-├── wokwi.toml
-```
-
 ---
 
 ## Funcionalidades do Menu
