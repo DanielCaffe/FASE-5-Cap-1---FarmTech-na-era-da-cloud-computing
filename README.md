@@ -75,6 +75,30 @@ Fase da operação: texto descritivo ("Inicial", "Crítica", etc)
 
 ---
 
+## Funcionalidades do Menu
+
+1 - Cadastrar Leitura
+2 - Listar Leituras
+3 - Alterar Leitura
+4 - Excluir Leitura
+5 - Excluir Todas as Leituras
+6 - Sair
+
+1. Cadastrar Leitura
+Solicita os dados ao usuário e armazena uma nova linha no banco.
+
+2. Listar Leituras
+Exibe todas as leituras armazenadas utilizando um DataFrame do pandas.
+
+3. Alterar Leitura
+Permite alterar o valor de umidade de um registro específico com base no ID.
+
+4. Excluir Leitura
+Remove uma leitura com base no ID informado.
+
+5. Excluir Todas as Leituras
+Apaga todos os registros da tabela com confirmação do usuário.
+
 ## 🔧 Como Executar o Código
 
 ### 🛠 Pré-requisitos:
