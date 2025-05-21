@@ -34,6 +34,15 @@ Projeto que simula sensores agrícolas no Wokwi (ESP32) e armazena dados em banc
 
 ---
 
+## 📜 Dados do monitor serial do ESP32
+
+Tabela 1: Ativações Automáticas da Bomba
+Condição Ativadora	        Temperatura	Umidade	  pH Médio	Vezes Ativada	Tempo Médio Ativação
+Umidade < 14%	              24.00°C	    10.00%	  14.7	        3	            ~3 minutos
+Umidade < 14% + Temp >23	  32.00°C	    10.00%	  14.2	        7	            ~5 minutos
+Umidade Crítica (7%)	      26.70°C	    7.00%	    13.8	        2	            ~2 minutos
+
+
 ## 📁 Estrutura de Pastas
 
 ```
