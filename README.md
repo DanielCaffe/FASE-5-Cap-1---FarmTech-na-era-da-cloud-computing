@@ -147,10 +147,109 @@ Apaga todos os registros da tabela com confirmação do usuário.
 - Os valores dos sensores são lidos e avaliados para decidir irrigação
 
 ---
+# 🧠 Justificativa da Estrutura de Dados para o Sistema de Irrigação Inteligente
 
-## 🗃 Histórico de Lançamentos
+A estrutura de banco de dados relacional (SQL) foi escolhida para este projeto considerando as seguintes características e requisitos do sistema:
 
-- 0.1.0 - 20/05/2025
+---
+
+## 1. Natureza dos Dados e Relacionamentos
+
+- **Dados Estruturados**: Leituras de sensores (temperatura, umidade, pH) têm estrutura fixa e bem definida.
+- **Relacionamentos Claros**: Existem relações previsíveis entre entidades (ex: leituras ↔ configurações).
+- **Consistência**: A garantia ACID (Atomicidade, Consistência, Isolamento, Durabilidade) é importante para registros de irrigação.
+
+---
+
+## 2. Vantagens do SQLite para este Caso
+
+- **Leveza e Portabilidade**: Ideal para sistemas embarcados ou de pequeno porte.
+- **Zero Configuração**: Não requer servidor dedicado.
+- **Compatibilidade**: Funciona bem com Python e potencialmente com microcontroladores.
+- **Performance Adequada**: Para o volume de dados gerado por sensores (leituras a cada 2 segundos).
+
+---
+
+## 3. Modelagem das Tabelas
+
+### 🔹 Tabela `leituras`
+
+```sql
+CREATE TABLE leituras (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_hora DATETIME NOT NULL,
+    temperatura REAL,
+    umidade REAL,
+    ph REAL,
+    bomba_ligada BOOLEAN
+);
+```
+
+**Justificativas**:
+- Chave primária auto-incrementada garante identificação única.
+- Tipos `REAL` otimizam o armazenamento numérico.
+- Campo `bomba_ligada` registra o estado no momento da leitura.
+
+---
+
+### 🔹 Tabela `ativacoes_manuais`
+
+```sql
+CREATE TABLE ativacoes_manuais (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_hora DATETIME NOT NULL,
+    botao_pressionado TEXT,
+    motivo TEXT
+);
+```
+
+**Justificativas**:
+- Registra intervenções humanas (ex: botão de emergência).
+- Campo `motivo` permite análises futuras das causas.
+
+---
+
+### 🔹 Tabela `configuracoes`
+
+```sql
+CREATE TABLE configuracoes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    umidade_minima REAL DEFAULT 14.0,
+    temperatura_maxima REAL DEFAULT 23.0,
+    tempo_maximo_bomba INTEGER DEFAULT 5
+);
+```
+
+**Justificativas**:
+- Funciona como singleton (um único registro de parâmetros atuais).
+- Permite modificar limites sem reprogramar o código.
+- Valores padrão seguem especificações definidas na Fase 1.
+
+---
+
+## 4. Alternativas Consideradas e Rejeitadas
+
+| Alternativa             | Motivo da Rejeição                                       |
+|-------------------------|-----------------------------------------------------------|
+| NoSQL (MongoDB)         | Dados são estruturados e relacionais                     |
+| Arquivos CSV/JSON       | Pouca integridade, difícil escalar                       |
+| Armazenamento na EEPROM | Limitado, difícil para consultas e operações complexas   |
+
+---
+
+## 5. Padrões de Acesso Otimizados
+
+- **Índices Automáticos**: SQLite cria índices para chaves primárias.
+- **Consultas Frequentes**:
+```sql
+SELECT * FROM leituras ORDER BY data_hora DESC LIMIT 10;
+```
+---
+
+## ✅ Conclusão
+
+Esta estrutura relacional oferece um ótimo equilíbrio entre simplicidade, integridade, performance e flexibilidade. Ela atende aos requisitos atuais e está preparada para futuras expansões do sistema de irrigação inteligente.
+
 ---
 
 ## 📋 Licença
