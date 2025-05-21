@@ -273,6 +273,10 @@ Campos bem tipados para refletir os sensores e contexto de leitura.
 Sem necessidade de tabelas auxiliares, pois não há relacionamentos 1:N ou N:N no escopo da simulação.
 
 ---
+Histórico de Lançamentos
+0.1.0 - 20/05/2025
+
+---
 
 ## 📋 Licença
 
