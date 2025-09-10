@@ -30,6 +30,7 @@
 ---
 Histórico de Lançamentos
 0.1.0 - 08/09/2025
+https://colab.research.google.com/drive/1hQTcGXfxkA-YQgGHxFHXfTeN-OItpv82?usp=sharing
 
 ---
 
