@@ -27,6 +27,31 @@
 
 ---
 
+## ATIVIDADE 2 CALCULADORA AWS
+
+Instância escolhida: t3.micro — atende 2 vCPU / 1 GiB RAM e rede “Up to 5 Gbps”
+Preço On-Demand (horário):
+
+us-east-1 (N. Virginia): US$ 0.0104 / hora → US$ 7.59 / mês (730 h)
+sa-east-1 (São Paulo): US$ 0.0168 / hora → US$ 12.26 / mês (730 h)
+
+EBS (gp3) — 50 GB (storage):
+
+us-east-1: US$ 0.08 / GB-mês → 50 × 0.08 = US$ 4.00 / mês.
+sa-east-1: US$ 0.152 / GB-mês → 50 × 0.152 = US$ 7.60 / mês.
+
+Total estimado (mensal, On-Demand, instância + 50 GB gp3):
+us-east-1: US$ 7.59 + US$ 4.00 = US$ 11.59 / mês.
+sa-east-1: US$ 12.26 + US$ 7.60 = US$ 19.86 / mês.
+
+A opção mais barata é rodar a instância em us-east-1 (N. Virginia) — cerca de US$ 11.59/mês contra US$ 19.86/mês em São Paulo
+Eu escolheria a região de São Paulo (sa-east-1), pois apesar do custo mais elevado, essa opção garante conformidade legal com a exigência de manter dados dentro do Brasil e oferece menor latência no acesso aos sensores locais. O custo extra é justificado pela segurança jurídica e pela performance do sistema.
+
+LINK YOUTUBE PASSO A PASSO SITE CALCULADORA AWS:
+https://youtu.be/PQ4umoOCZXM
+
+
+
 ---
 Histórico de Lançamentos
 0.1.0 - 08/09/2025
